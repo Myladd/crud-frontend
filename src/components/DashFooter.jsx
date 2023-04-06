@@ -20,10 +20,10 @@ const DashFooter = () => {
     }
 
     const content = (
-        <footer className="dash-footer">
+        <footer className="absolute bottom-0 p-8 w-full flex justify-center items-center gap-4 bg-[#1D976C]">
             {goHomeButton}
-            <p>Current User:</p>
-            <p>Status:</p>
+            <p className='text-white font-bold text-2xl'>Current User:</p>
+            <p className='text-white font-bold text-2xl'>Status:</p>
         </footer>
     )
     return content
