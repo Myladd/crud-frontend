@@ -1,5 +1,5 @@
 import { store } from '../../app/store'
-import { notesApiSlice } from '../notes/notesApiSlice'
+import { notesApiSlice } from '../notes/noteApiSlice'
 import { usersApiSlice } from '../users/usersApiSlice';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';

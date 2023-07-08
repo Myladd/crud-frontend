@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { selectNoteById } from "./notesApiSlice";
+import { selectNoteById } from "./noteApiSlice";
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const Note = ({ noteId }) => {
   const note = useSelector((state) => selectNoteById(state, noteId));
@@ -16,16 +17,16 @@ const Note = ({ noteId }) => {
     const handleEdit = () => navigate(`/dash/notes/${noteId}`);
 
     return (
-      <tr className="table__row">
-        <td className="table__cell note__status">{note.completed ? <span className="note__status--completed">Completed</span> : <span className="note__status--open">Open</span>}</td>
-        <td className="table__cell note__created">{created}</td>
-        <td className="table__cell note__updated">{updated}</td>
-        <td className="table__cell note__title">{note.title}</td>
-        <td className="table__cell note__username">{note.username}</td>
+      <tr className="border-b-2 border-green-400">
+        <td className="p-2">{note.completed ? <span className="text-green-700">Completed</span> : <span className="text-blue-500">Open</span>}</td>
+        <td className="p-2">{note.title}</td>
+        <td className="p-2">{note.username}</td>
+        <td className="p-2">{created}</td>
+        <td className="p-2">{updated}</td>
 
-        <td className="table__cell">
-          <button className="icon-button table__button" onClick={handleEdit}>
-            blah
+        <td className="p-2">
+          <button className="p-2 hover:bg-cyan-400 rounded-3xl" onClick={handleEdit}>
+            <EditNoteIcon color="success"/>
           </button>
         </td>
       </tr>

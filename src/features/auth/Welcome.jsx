@@ -1,28 +1,41 @@
-import { Link } from 'react-router-dom'
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Welcome = () => {
+  const date = new Date();
+  const today = new Intl.DateTimeFormat("en-US", { dateStyle: "full", timeStyle: "long" }).format(date);
 
-    const date = new Date()
-    const today = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(date)
+  const content = (
+    <section className="welcome">
+      <div className="w-full flex justify-between p-6">
+        <h1 className="text-3xl">Welcome!</h1>
+        <p className="text-xl">{today}</p>
+      </div>
+      <div className="notes mt-10 w-full flex justify-center items-center gap-8">
+        <Link to="/dash/notes">
+          <Button variant="outlined">View "Plans"</Button>
+        </Link>
 
-    const content = (
-        <section className="welcome">
+        <Link to="/dash/notes/new">
+          <Button variant="contained">Add New "Plan"</Button>
+        </Link>
+      </div>
+      <div className="users mt-8 flex justify-center items-center gap-8">
+        <Link to="/dash/users">
+          <Button variant="outlined" color="secondary">
+            View User Settings
+          </Button>
+        </Link>
 
-            <p>{today}</p>
+        <Link to="/dash/users/new">
+          <Button variant="contained" color="secondary">
+            Add New User
+          </Button>
+        </Link>
+      </div>
+    </section>
+  );
 
-            <h1>Welcome!</h1>
-
-            <p><Link to="/dash/notes">View "Plans"</Link></p>
-
-            <p><Link to="/dash/notes/new">Add New "Plan"</Link></p>
-
-            <p><Link to="/dash/users">View User Settings</Link></p>
-
-            <p><Link to="/dash/users/new">Add New User</Link></p>
-
-        </section>
-    )
-
-    return content
-}
-export default Welcome
+  return content;
+};
+export default Welcome;

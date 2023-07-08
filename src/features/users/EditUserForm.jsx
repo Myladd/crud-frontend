@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { ROLES } from "../../config/roles";
 
 const USER_REGEX = /^[A-z]{3,20}$/;
@@ -94,10 +94,10 @@ const EditUserForm = ({ user }) => {
           <h2>Edit User</h2>
           <div className="form__action-buttons">
             <button className="icon-button" title="Save" onClick={onSaveUserClicked} disabled={!canSave}>
-              <FontAwesomeIcon icon={faSave} />
+              save
             </button>
             <button className="icon-button" title="Delete" onClick={onDeleteUserClicked}>
-              <FontAwesomeIcon icon={faTrashCan} />
+              trash
             </button>
           </div>
         </div>

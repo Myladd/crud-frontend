@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAddNewNoteMutation } from "./notesApiSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { useAddNewNoteMutation } from "./noteApiSlice";
+import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 const NewNoteForm = ({ users }) => {
   const [addNewNote, { isLoading, isSuccess, isError, error }] = useAddNewNoteMutation();
@@ -12,6 +11,7 @@ const NewNoteForm = ({ users }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [userId, setUserId] = useState(users[0].id);
+  console.log(userId);
 
   useEffect(() => {
     if (isSuccess) {
@@ -37,10 +37,10 @@ const NewNoteForm = ({ users }) => {
 
   const options = users.map((user) => {
     return (
-      <option key={user.id} value={user.id}>
+      <MenuItem key={user.id} value={user.id}>
         {" "}
         {user.username}
-      </option>
+      </MenuItem>
     );
   });
 
@@ -49,36 +49,38 @@ const NewNoteForm = ({ users }) => {
   const validTextClass = !text ? "form__input--incomplete" : "";
 
   const content = (
-    <>
+    <div className="form-content w-full flex flex-col gap-8 items-center">
       <p className={errClass}>{error?.data?.message}</p>
 
-      <form className="form" onSubmit={onSaveNoteClicked}>
+      <form className="form w-80 mt-10 flex flex-col items-center justify-center gap-4" onSubmit={onSaveNoteClicked}>
         <div className="form__title-row">
-          <h2>New Note</h2>
-          <div className="form__action-buttons">
-            <button className="icon-button" title="Save" disabled={!canSave}>
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-          </div>
+          <h2 className="text-2xl mb-8">Add Your New Plan &#127919;</h2>
         </div>
-        <label className="form__label" htmlFor="title">
-          Title:
-        </label>
-        <input className={`form__input ${validTitleClass}`} id="title" name="title" type="text" autoComplete="off" value={title} onChange={onTitleChanged} />
+        <TextField className={`form__input w-full ${validTitleClass}`} id="title" label="Title" variant="outlined" name="title" type="text" autoComplete="off" value={title} onChange={onTitleChanged} />
 
-        <label className="form__label" htmlFor="text">
-          Text:
-        </label>
-        <textarea className={`form__input form__input--text ${validTextClass}`} id="text" name="text" value={text} onChange={onTextChanged} />
+        <TextField className={`form__input form__input--text w-full ${validTextClass}`} id="text" label="Text" variant="outlined" name="text" type="text" autoComplete="off" value={text} onChange={onTextChanged} />
 
-        <label className="form__label form__checkbox-container" htmlFor="username">
-          ASSIGNED TO:
-        </label>
-        <select id="username" name="username" className="form__select" value={userId} onChange={onUserIdChanged}>
-          {options}
-        </select>
+        <div className="user-select w-full flex justify-center items-center gap-2">
+          <InputLabel id="username-lab">Assigned To:</InputLabel>
+          <Select
+            className="form__select"
+            labelId="username-lab"
+            id="username"
+            name="username"
+            value={userId}
+            label="Assigned"
+            onChange={onUserIdChanged}
+          >
+            {options}
+          </Select>
+        </div>
+        <div className="form__action-buttons w-full">
+          <Button className="w-full" title="Save" variant="contained" color="success" disabled={!canSave}>
+            save
+          </Button>
+        </div>
       </form>
-    </>
+    </div>
   );
 
   return content;

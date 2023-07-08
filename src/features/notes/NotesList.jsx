@@ -1,4 +1,4 @@
-import { useGetNotesQuery } from "./notesApiSlice"
+import { useGetNotesQuery } from "./noteApiSlice"
 import Note from "./Note"
 
 const NotesList = () => {
@@ -26,21 +26,23 @@ const NotesList = () => {
             : null
 
         content = (
-            <table className="table table--notes">
-                <thead className="table__thead">
-                    <tr>
-                        <th scope="col" className="table__th note__status">Username</th>
-                        <th scope="col" className="table__th note__created">Created</th>
-                        <th scope="col" className="table__th note__updated">Updated</th>
-                        <th scope="col" className="table__th note__title">Title</th>
-                        <th scope="col" className="table__th note__username">Owner</th>
-                        <th scope="col" className="table__th note__edit">Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tableContent}
-                </tbody>
-            </table>
+            <div className="table-container w-full mt-8 flex justify-center">
+                <table className="table-auto w-[50%] text-center border-2 border-green-400">
+                    <thead className="bg-green-400">
+                        <tr className="border-b-2 border-green-400">
+                            <th scope="col" className="p-2">Username</th>
+                            <th scope="col" className="p-2">Title</th>
+                            <th scope="col" className="p-2">Owner</th>
+                            <th scope="col" className="p-2">Created</th>
+                            <th scope="col" className="p-2">Updated</th>
+                            <th scope="col" className="p-2">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tableContent}
+                    </tbody>
+                </table>
+            </div>
         )
     }
 

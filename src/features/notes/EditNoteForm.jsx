@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { useUpdateNoteMutation, useDeleteNoteMutation } from "./notesApiSlice";
+import { useUpdateNoteMutation, useDeleteNoteMutation } from "./noteApiSlice";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { Button, Checkbox, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 const EditNoteForm = ({ note, users }) => {
   const [updateNote, { isLoading, isSuccess, isError, error }] = useUpdateNoteMutation();
@@ -47,10 +46,10 @@ const EditNoteForm = ({ note, users }) => {
 
   const options = users.map((user) => {
     return (
-      <option key={user.id} value={user.id}>
+      <MenuItem key={user.id} value={user.id}>
         {" "}
         {user.username}
-      </option>
+      </MenuItem>
     );
   });
 
@@ -63,43 +62,29 @@ const EditNoteForm = ({ note, users }) => {
   const content = (
     <>
       <p className={errClass}>{errContent}</p>
-
-      <form className="form" onSubmit={(e) => e.preventDefault()}>
-        <div className="form__title-row">
-          <h2>Edit Note #{note.ticket}</h2>
-          <div className="form__action-buttons">
-            <button className="icon-button" title="Save" onClick={onSaveNoteClicked} disabled={!canSave}>
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-            <button className="icon-button" title="Delete" onClick={onDeleteNoteClicked}>
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
+      <div className="edit-container w-full flex justify-center">
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
+          <div className="form__title-row mb-4">
+            <h2 className="text-xl text-center">Edit Note #{note.ticket}</h2>
           </div>
-        </div>
-        <label className="form__label" htmlFor="note-title">
-          Title:
-        </label>
-        <input className={`form__input ${validTitleClass}`} id="note-title" name="title" type="text" autoComplete="off" value={title} onChange={onTitleChanged} />
+          <div className="fields-container mb-4 flex flex-col items-center justify-center gap-4">
+            <TextField className={`form__input w-full ${validTitleClass}`} id="note-title" label="Title" variant="outlined" name="title" type="text" autoComplete="off" value={title} onChange={onTitleChanged} />
 
-        <label className="form__label" htmlFor="note-text">
-          Text:
-        </label>
-        <textarea className={`form__input form__input--text ${validTextClass}`} id="note-text" name="text" value={text} onChange={onTextChanged} />
-        <div className="form__row">
-          <div className="form__divider">
-            <label className="form__label form__checkbox-container" htmlFor="note-completed">
-              WORK COMPLETE:
-              <input className="form__checkbox" id="note-completed" name="completed" type="checkbox" checked={completed} onChange={onCompletedChanged} />
-            </label>
-
-            <label className="form__label form__checkbox-container" htmlFor="note-username">
+            <TextField className={`form__input form__input--text w-full ${validTextClass}`} id="note-text" label="text" multiline rows={4} value={text} onChange={onTextChanged} />
+          </div>
+          <div className="user-container flex gap-4 items-center">
+            <label className="form__label form__checkbox-container font-bold" htmlFor="note-username">
               ASSIGNED TO:
             </label>
-            <select id="note-username" name="username" className="form__select" value={userId} onChange={onUserIdChanged}>
+            <Select className="form__select" labelId="note-username" name="username" id="note-username" value={userId} label="Assign to" onChange={onUserIdChanged}>
               {options}
-            </select>
+            </Select>
           </div>
-          <div className="form__divider">
+          <label className="form__label form__checkbox-container font-bold" htmlFor="note-completed">
+            WORK COMPLETE:
+            <Checkbox className="form__checkbox" id="note-completed" name="completed" type="checkbox" checked={completed} onChange={onCompletedChanged} />
+          </label>
+          <div className="form__divider mb-4">
             <p className="form__created">
               Created:
               <br />
@@ -111,8 +96,16 @@ const EditNoteForm = ({ note, users }) => {
               {updated}
             </p>
           </div>
-        </div>
-      </form>
+          <div className="form__action-buttons flex justify-center gap-4">
+            <Button className="icon-button w-full" variant="contained" color="success" title="Save" onClick={onSaveNoteClicked} disabled={!canSave}>
+              save
+            </Button>
+            <Button className="icon-button w-full" variant="outlined" color="error" title="Delete" onClick={onDeleteNoteClicked}>
+              trash
+            </Button>
+          </div>
+        </form>
+      </div>
     </>
   );
 
